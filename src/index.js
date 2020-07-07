@@ -62,6 +62,12 @@ class GamePhraseWriting extends HTMLElement {
           padding:.5rem;
           gap:20px;
         }
+        .${this.baseClass}_header {
+          padding:0 1rem;
+        }
+        .${this.baseClass}_header-level{
+          font-weight: bold
+        }
         .${this.baseClass}_footer {
           display:flex;
           justify-content:center;
