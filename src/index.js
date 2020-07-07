@@ -24,7 +24,9 @@ class GamePhraseWriting extends HTMLElement {
 
   initGame() {
     this.addStyles();
-    this.createElementsGame();
+    // this.createElementsGame();
+
+    this.shadowRoot.appendChild(this.showToModal("welcome"));
   }
 
   static get observedAttributes() {
@@ -279,6 +281,69 @@ class GamePhraseWriting extends HTMLElement {
         this.nextLevel(elemToValidate);
       });
     });
+  }
+
+  showToModal(type) {
+    const dataModal = this.getDataModal(type);
+
+    console.log(dataModal, "===");
+    const modalOverlay = this.createElement(
+      "div",
+      {
+        class: `${this.baseClass}_modal-overlay`
+      },
+      [dataModal]
+    );
+    return modalOverlay;
+  }
+
+  getDataModal(type) {
+    const partsContent = [];
+    let modal = {
+      welcome: {
+        title: "welcome",
+        url: ""
+      },
+      instructions: {
+        title: "intructions",
+        list: ["intruction 1", "instruction 2", "instruction 3"],
+        url: ""
+      },
+      nextLevel: {
+        title: "",
+        url: ""
+      },
+      lose: {
+        title: "",
+        url: ""
+      },
+      finish: {
+        title: "",
+        url: ""
+      }
+    };
+
+    if (modal[type].title) {
+      let title = this.createElement("h1", {
+        class: `${this.baseClass}_modal-title`
+      });
+      partsContent.push(title);
+    }
+    if (type === "instructions") {
+      let ul = this.createElement("ul", {
+        class: `${this.baseClass}_modal-ul`
+      });
+    }
+
+    const modalContent = this.createElement(
+      "div",
+      {
+        class: `${this.baseClass}_modal-content`,
+        "data-type": `${type}`
+      },
+      partsContent
+    );
+    return modalContent;
   }
 
   nextLevel(elemToValidate) {
